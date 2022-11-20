@@ -7,8 +7,18 @@ import { UserRepository } from './user.dao';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepository.create(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const { isStoreOwner, store, ...userDetails } = createUserDto;
+
+    userDetails.password = await UserRepository.generateHash(
+      createUserDto.password,
+    ); // hash the password before storing it in the database
+
+    if (isStoreOwner && store) {
+      return await this.userRepository.createStoreOwner(userDetails, store);
+    }
+
+    return this.userRepository.createCustomer(userDetails);
   }
 
   findAll() {

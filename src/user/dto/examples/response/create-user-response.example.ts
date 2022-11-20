@@ -5,7 +5,7 @@ export const userWithStoreOwner = {
   lastname: 'user2',
   middlename: 'test',
   password: '$2b$10$nFR24OBPZM9c9WDeG19bEO.NvG9w21s7IL56xcTxeCQDF70wf0SUS',
-  role: 'USER',
+  role: 'OWNER',
   createdAt: '2022-11-19T15:42:55.108Z',
   updatedAt: '2022-11-19T15:42:55.108Z',
   stores: [

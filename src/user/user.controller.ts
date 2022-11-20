@@ -32,7 +32,6 @@ import {
 
 @Controller('user')
 @ApiTags('Users')
-@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -73,18 +72,31 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get user Details' })
+  @ApiResponse({
+    status: 200,
+    description: 'The user has been successfully fetched.',
+    content: {
+      'application/json': {
+        example: user,
+      },
+    },
+  })
   @Get()
   findAll(@Request() req) {
     return req.user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Patch('')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Delete('')
   remove(@Param('id') id: string) {
