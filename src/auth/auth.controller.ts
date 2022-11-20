@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Request, Post, UseGuards, Body } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
+import {
+  loginUserExampleBody,
+  loginUserExampleResponse,
+} from './dto/responses/examples/login-user.example';
 import { LocalAuthGuard } from './local-auth.guard';
-import loginUserExample from './dto/responses/examples/login-user.example';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -13,12 +16,21 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
+  @ApiBody({
+    type: LoginUserDto,
+    description: 'Login User',
+    examples: {
+      'Login User': {
+        value: loginUserExampleBody,
+      },
+    },
+  })
   @ApiResponse({
     status: 200,
     description: 'Logout successful',
     content: {
       'application/json': {
-        example: loginUserExample,
+        example: loginUserExampleResponse,
       },
     },
   })

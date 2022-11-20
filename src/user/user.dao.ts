@@ -61,6 +61,14 @@ export class UserRepository {
     });
   }
 
+  async findOneById(id: number) {
+    return await this.prismaService.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   static async generateHash(password: string) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);

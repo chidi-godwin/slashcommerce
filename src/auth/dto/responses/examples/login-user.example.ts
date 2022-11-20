@@ -1,4 +1,4 @@
-export default {
+export const loginUserExampleResponse = {
   user: {
     id: 4,
     email: 'testuser@example.com',
@@ -11,4 +11,9 @@ export default {
   },
   access_token:
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njg5MTAyODIsImV4cCI6MTY2ODk5NjY4Mn0.mtsDQkws1LAWMVgAmras9PGjpFuEcR5IdM-WHYaj1QA',
+};
+
+export const loginUserExampleBody = {
+  email: 'testuser@example.com',
+  password: '12345678',
 };
