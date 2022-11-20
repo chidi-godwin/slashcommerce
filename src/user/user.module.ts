@@ -9,5 +9,6 @@ import { IsUserAlreadyExistConstraint } from './validations/IsUserAlreadyExist.v
   controllers: [UserController],
   providers: [UserService, UserRepository, IsUserAlreadyExistConstraint],
   imports: [PrismaModule],
+  exports: [UserRepository],
 })
 export class UserModule {}

@@ -24,6 +24,8 @@ async function bootstrap() {
     .setDescription('Slash Commerce API Documentation')
     .setVersion('1.0')
     .addTag('Users')
+    .addTag('Stores')
+    .addTag('Auth')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
