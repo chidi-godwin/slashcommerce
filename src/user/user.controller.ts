@@ -4,10 +4,10 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
   UseGuards,
   Request,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -29,6 +29,7 @@ import {
   createStoreOwnerExample,
   createUserExample,
 } from './dto/examples/body/create-user-body.example';
+import { UpdateUserExample } from './dto/examples/body/update-user.example';
 
 @Controller('user')
 @ApiTags('Users')
@@ -91,15 +92,35 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @ApiBody({
+    type: UpdateUserDto,
+    description: 'Update User',
+    examples: {
+      'Update User': {
+        value: UpdateUserExample,
+        description: 'Update User/Customer',
+      },
+    },
+  })
   @Patch('')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  update(@Req() req, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(req.user.id, updateUserDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({ summary: "Delete a user's account" })
+  @ApiResponse({
+    status: 200,
+    description: 'The user account has been successfully deleted.',
+    content: {
+      'application/json': {
+        example: user,
+      },
+    },
+  })
   @Delete('')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  remove(@Req() req) {
+    return this.userService.remove(req.user.id);
   }
 }

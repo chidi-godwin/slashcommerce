@@ -65,6 +65,23 @@ export class UserRepository {
     });
   }
 
+  async update(id: number, data: any) {
+    return await this.prismaService.user.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async delete(id: number) {
+    return await this.prismaService.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   static async generateHash(password: string) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);

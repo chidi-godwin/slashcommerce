@@ -21,19 +21,15 @@ export class UserService {
     return this.userRepository.createCustomer(userDetails);
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
   findOne(id: number) {
     return this.userRepository.findOneById(id);
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.userRepository.update(id, updateUserDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
   }
 }

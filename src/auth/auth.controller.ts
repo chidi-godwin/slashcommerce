@@ -26,7 +26,7 @@ export class AuthController {
     },
   })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Logout successful',
     content: {
       'application/json': {
