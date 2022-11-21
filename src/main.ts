@@ -23,9 +23,9 @@ async function bootstrap() {
     .setTitle('Slash Commerce 1.0')
     .setDescription('Slash Commerce API Documentation')
     .setVersion('1.0')
+    .addTag('Auth')
     .addTag('Users')
     .addTag('Stores')
-    .addTag('Auth')
     .addBearerAuth()
     .build();
 
