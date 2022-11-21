@@ -33,6 +33,7 @@ import { UpdateUserExample } from './dto/examples/body/update-user.example';
 
 @Controller('user')
 @ApiTags('Users')
+@UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -73,7 +74,6 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get user Details' })
   @ApiResponse({
@@ -90,7 +90,6 @@ export class UserController {
     return req.user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiBody({
     type: UpdateUserDto,
@@ -107,7 +106,6 @@ export class UserController {
     return this.userService.update(req.user.id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: "Delete a user's account" })
   @ApiResponse({
