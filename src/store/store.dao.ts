@@ -3,18 +3,35 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class StoreRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  private readonly _include: any;
+  constructor(private readonly prismaService: PrismaService) {
+    this._include = {
+      user: {
+        select: {
+          id: true,
+          email: true,
+        },
+      },
+    };
+  }
 
   async create(data: any) {
     return await this.prismaService.store.create({
       data,
-      include: {
-        user: {
-          select: {
-            id: true,
-          },
-        },
-      },
+      include: this._include,
+    });
+  }
+
+  async findAll() {
+    return await this.prismaService.store.findMany({
+      include: this._include,
+    });
+  }
+
+  async findOneById(id: number) {
+    return await this.prismaService.store.findUnique({
+      where: { id },
+      include: this._include,
     });
   }
 

@@ -13,11 +13,11 @@ export class StoreService {
   }
 
   findAll() {
-    return `This action returns all store`;
+    return this.storeRepository.findAll();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} store`;
+    return this.storeRepository.findOneById(id);
   }
 
   update(id: number, updateStoreDto: UpdateStoreDto) {
