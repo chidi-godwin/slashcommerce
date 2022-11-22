@@ -21,16 +21,10 @@ export class StoreService {
   }
 
   update(id: number, updateStoreDto: UpdateStoreDto) {
-    try {
-      console.log('trying this function');
-      return this.storeRepository.update(id, updateStoreDto);
-    } catch (error) {
-      console.log('The error was caught');
-      console.log(error);
-    }
+    return this.storeRepository.update(id, updateStoreDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} store`;
+    return this.storeRepository.delete(id);
   }
 }

@@ -74,7 +74,6 @@ export class StoreController {
     },
   })
   create(@Req() req: any, @Body() createStoreDto: CreateStoreDto) {
-    console.log('req.user', req.user);
     return this.storeService.create(req.user.id, createStoreDto);
   }
 
@@ -134,6 +133,15 @@ export class StoreController {
   }
 
   @ApiOperation({ summary: 'Delete a store by Id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Store has been successfully deleted',
+    content: {
+      'application/json': {
+        example: createStoreSuccessResponseExample,
+      },
+    },
+  })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.storeService.remove(+id);

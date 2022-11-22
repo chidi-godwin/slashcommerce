@@ -65,4 +65,25 @@ export class StoreRepository {
       }
     }
   }
+
+  async delete(id: number) {
+    try {
+      return await this.prismaService.store.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new HttpException(
+          {
+            statusCode: HttpStatus.BAD_REQUEST,
+            message: [`Store with id ${id} does not exist`],
+            error: error.meta.cause,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+  }
 }
