@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -41,5 +42,27 @@ export class StoreRepository {
         name,
       },
     });
+  }
+
+  async update(id: number, data: any) {
+    try {
+      return await this.prismaService.store.update({
+        where: {
+          id,
+        },
+        data,
+      });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new HttpException(
+          {
+            statusCode: HttpStatus.BAD_REQUEST,
+            message: [`Store with id ${id} does not exist`],
+            error: error.meta.cause,
+          },
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
   }
 }

@@ -21,7 +21,13 @@ export class StoreService {
   }
 
   update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
+    try {
+      console.log('trying this function');
+      return this.storeRepository.update(id, updateStoreDto);
+    } catch (error) {
+      console.log('The error was caught');
+      console.log(error);
+    }
   }
 
   remove(id: number) {
