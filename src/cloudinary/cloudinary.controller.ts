@@ -5,7 +5,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CloudinaryService } from './cloudinary.service';
 
 @Controller('uploads')
@@ -15,6 +21,11 @@ export class CloudinaryController {
 
   @Post('imageUpload')
   @UseInterceptors(FileInterceptor('file'))
+  @ApiOperation({
+    summary: 'Upload image',
+    description:
+      'Upload image to image bucket and retrieve link to be added to products',
+  })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -27,7 +38,30 @@ export class CloudinaryController {
       },
     },
   })
+  @ApiResponse({
+    status: 200,
+    description: 'Image uploaded successfully',
+    content: {
+      'application/json': {
+        example: {
+          status: 'Success',
+          message: 'Image uploaded successfully',
+          data: {
+            secure_url:
+              'https://res.cloudinary.com/chidi-godwin/image/upload/v1669812637/slashcommerce/ckcdhyj6ytdbbygds01h.png',
+          },
+        },
+      },
+    },
+  })
   async uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.cloudinaryService.uploadImage(file);
+    const { secure_url } = await this.cloudinaryService.uploadImage(file);
+    return {
+      status: 'Success',
+      message: 'Image uploaded successfully',
+      data: {
+        secure_url,
+      },
+    };
   }
 }
