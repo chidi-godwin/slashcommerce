@@ -3,6 +3,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -35,6 +36,15 @@ export class CreateProductDto {
     example: 30.0,
   })
   price: number;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  @ApiProperty({
+    description: 'Enter discount value in percentage (e.g 10)',
+    example: 10,
+  })
+  discount?: number;
 
   @IsInt()
   @IsPositive()

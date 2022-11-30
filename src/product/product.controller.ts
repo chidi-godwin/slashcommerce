@@ -19,7 +19,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { CREATE_STORE_EXAMPLE } from './dto/examples/create-store.example';
+import {
+  CREATE_STORE_EXAMPLE,
+  CREATE_STORE_WITH_DISCOUNT_EXAMPLE,
+} from './dto/examples/create-store.example';
 import {
   CREATE_STORE_RESPONSE,
   GET_ALL_STORES_EXAMPLE,
@@ -39,6 +42,9 @@ export class ProductController {
     examples: {
       'Create Store': {
         value: CREATE_STORE_EXAMPLE,
+      },
+      'Create Store with discount': {
+        value: CREATE_STORE_WITH_DISCOUNT_EXAMPLE,
       },
     },
   })
