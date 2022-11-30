@@ -21,4 +21,25 @@ export class ProductRespository {
       data: product,
     });
   }
+
+  async findAll() {
+    return this.prismaService.product.findMany();
+  }
+
+  async findOneById(id: number) {
+    return this.prismaService.product.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async update(id: number, data: any) {
+    return this.prismaService.product.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  }
 }

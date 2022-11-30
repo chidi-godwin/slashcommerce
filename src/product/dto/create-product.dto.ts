@@ -11,6 +11,9 @@ import {
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({
+    example: 'Bentoo Blender',
+  })
   title: string;
 
   @IsUrl()
@@ -22,12 +25,21 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
+  @ApiProperty({
+    example: 'A blender for your kitchen',
+  })
   description: string;
 
   @IsNumber()
+  @ApiProperty({
+    example: 30.0,
+  })
   price: number;
 
   @IsInt()
   @IsPositive()
+  @ApiProperty({
+    example: 1,
+  })
   storeId: number;
 }
