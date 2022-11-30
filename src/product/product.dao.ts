@@ -42,4 +42,12 @@ export class ProductRespository {
       data,
     });
   }
+
+  async remove(id: number) {
+    return this.prismaService.product.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

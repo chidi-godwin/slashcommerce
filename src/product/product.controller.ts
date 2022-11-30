@@ -113,6 +113,16 @@ export class ProductController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a product by Id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Product successfully deleted',
+    content: {
+      'application/json': {
+        example: CREATE_STORE_RESPONSE,
+      },
+    },
+  })
   remove(@Param('id') id: string) {
     return this.productService.remove(+id);
   }
