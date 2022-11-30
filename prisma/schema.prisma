@@ -46,6 +46,7 @@ model Product {
   image       String
   description String
   price       Float
+  discount    Float?     @default(0)
   storeId     Int
   store       Store      @relation(fields: [storeId], references: [id])
   cartItems   CartItem[]
@@ -55,7 +56,7 @@ model Product {
   @@index([title])
 }
 
-model Discount {
+model Voucher {
   id          Int      @id @default(autoincrement())
   code        String
   description String
