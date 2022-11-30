@@ -11,16 +11,37 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CREATE_STORE_EXAMPLE } from './dto/examples/create-store.example';
+import { CREATE_STORE_RESPONSE } from './dto/examples/create-store-response.example';
 
 @Controller('product')
 @ApiTags('Products')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a product for a store' })
+  @ApiBody({
+    type: CreateProductDto,
+    description: 'Create a product for a store',
+    examples: {
+      'Create Store': {
+        value: CREATE_STORE_EXAMPLE,
+      },
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Product successfully created',
+    content: {
+      'application/json': {
+        example: CREATE_STORE_RESPONSE,
+      },
+    },
+  })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
