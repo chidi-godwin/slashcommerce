@@ -9,10 +9,20 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CartService } from './cart.service';
 import { CreateCartItemDto } from './dto/create-cart.dto';
+import {
+  ADD_ITEM_TO_CART_RESPONSE_EXAMPLE,
+  GET_CART_RESPONSE_EXAMPLE,
+} from './dto/examples/get-cart-response.example';
 import { UpdateCartItemDto } from './dto/update-cart.dto';
 
 @Controller('cart')
@@ -22,29 +32,81 @@ import { UpdateCartItemDto } from './dto/update-cart.dto';
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @ApiOperation({ summary: 'Add a product to the cart' })
   @Post('item')
-  create(@Req() req: any, @Body() createCartItemDto: CreateCartItemDto) {
-    return this.cartService.create(createCartItemDto, req.user.Cart.id);
+  @ApiOperation({ summary: 'Add a product to the cart' })
+  @ApiResponse({
+    status: 201,
+    description: 'The product has been successfully added to the cart',
+    content: {
+      'application/json': { example: ADD_ITEM_TO_CART_RESPONSE_EXAMPLE },
+    },
+  })
+  async addItemToCart(
+    @Req() req: any,
+    @Body() createCartItemDto: CreateCartItemDto,
+  ) {
+    return this.cartService.addItemToCart(createCartItemDto, req.user.Cart.id);
   }
 
   @Get()
-  findAll() {
-    return this.cartService.findAll();
+  @ApiOperation({ summary: 'Get Cart for authenticated user' })
+  @ApiResponse({
+    status: 200,
+    description: 'User cart successfully retrieved',
+    content: {
+      'application/json': {
+        examples: {
+          'user cart': {
+            value: GET_CART_RESPONSE_EXAMPLE,
+          },
+        },
+      },
+    },
+  })
+  async getCart(@Req() req: any) {
+    return this.cartService.getCart(req.user.Cart.id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
+  @Patch('item/:id')
+  @ApiOperation({ summary: 'Update item in cart' })
+  @ApiParam({
+    name: 'id',
+    description: 'Cart item id',
+    required: true,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Cart item details successfully updated',
+    content: {
+      'application/json': {
+        example: ADD_ITEM_TO_CART_RESPONSE_EXAMPLE,
+      },
+    },
+  })
+  async updateCartItem(
+    @Param('id') id: number,
+    @Body() updateCartDto: UpdateCartItemDto,
+  ) {
+    return this.cartService.updateCartItem(+id, updateCartDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartItemDto) {
-    return this.cartService.update(+id, updateCartDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Delete('item/:id')
+  @ApiOperation({ summary: 'Remove item from cart' })
+  @ApiParam({
+    name: 'id',
+    description: 'Cart item id',
+    required: true,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Item successfully removed from cart',
+    content: {
+      'application/json': {
+        example: ADD_ITEM_TO_CART_RESPONSE_EXAMPLE,
+      },
+    },
+  })
+  async removeItem(@Param('id') id: number) {
+    return this.cartService.removeCartItem(+id);
   }
 }

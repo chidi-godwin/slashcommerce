@@ -7,24 +7,28 @@ import { UpdateCartItemDto } from './dto/update-cart.dto';
 export class CartService {
   constructor(private readonly cartRepository: CartRepository) {}
 
-  create(createCartItemDto: CreateCartItemDto, cartId: number) {
+  async addItemToCart(createCartItemDto: CreateCartItemDto, cartId: number) {
     const { productId, ...data } = createCartItemDto;
     return this.cartRepository.create(data, productId, cartId);
   }
 
-  findAll() {
-    return `This action returns all cart`;
+  async findAll() {
+    return this.cartRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
+  async getCart(id: number) {
+    return this.cartRepository.findOne(id);
   }
 
-  update(id: number, updateCartDto: UpdateCartItemDto) {
-    return `This action updates a #${id} cart`;
+  async updateCartItem(id: number, updateCartDto: UpdateCartItemDto) {
+    return this.cartRepository.updateCartItem(id, updateCartDto);
   }
 
-  remove(id: number) {
+  async removeCartItem(id: number) {
+    return this.cartRepository.removeCartItem(id);
+  }
+
+  async remove(id: number) {
     return `This action removes a #${id} cart`;
   }
 }

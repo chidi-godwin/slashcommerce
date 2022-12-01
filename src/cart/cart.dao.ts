@@ -3,14 +3,19 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CartRepository {
-  private readonly _include: any;
+  private readonly _cartItemIncludes: any;
+  private readonly _cartIncludes: any;
   constructor(private readonly prismaService: PrismaService) {
-    this._include = {
+    this._cartItemIncludes = {
       product: {
         select: {
           id: true,
         },
       },
+    };
+
+    this._cartIncludes = {
+      cartItems: true,
     };
   }
   create(data: any, productId: number, cartId: number) {
@@ -20,16 +25,40 @@ export class CartRepository {
         cart: { connect: { id: cartId } },
         product: { connect: { id: productId } },
       },
-      include: this._include,
+      include: this._cartItemIncludes,
     });
   }
 
   findAll() {
-    return `This action returns all cart`;
+    return this.prismaService.cart.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} cart`;
+    return this.prismaService.cart.findUnique({
+      where: {
+        id,
+      },
+      include: this._cartIncludes,
+    });
+  }
+
+  async updateCartItem(id: number, updateCartItemDto: any) {
+    return this.prismaService.cartItem.update({
+      where: {
+        id,
+      },
+      data: updateCartItemDto,
+      include: this._cartItemIncludes,
+    });
+  }
+
+  async removeCartItem(id: number) {
+    return this.prismaService.cartItem.delete({
+      where: {
+        id,
+      },
+      include: this._cartItemIncludes,
+    });
   }
 
   update(id: number, updateCartDto: any) {
