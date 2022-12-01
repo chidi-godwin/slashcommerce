@@ -19,7 +19,7 @@ model User {
   password   String
   stores     Store[]
   role       Role     @default(USER)
-  Cart       Cart[]
+  Cart       Cart?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
@@ -68,7 +68,7 @@ model Voucher {
 model Cart {
   id        Int        @id @default(autoincrement())
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
+  userId    Int        @unique()
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   cartItems CartItem[]
