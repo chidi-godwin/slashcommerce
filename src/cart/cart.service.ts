@@ -31,4 +31,22 @@ export class CartService {
   async clearCart(id: number) {
     return this.cartRepository.removeManyCartItems(id);
   }
+
+  async calculateCartTotal(id: number) {
+    const cart: any = await this.getCart(id);
+    const cartItems = cart.cartItems;
+
+    const total = cartItems.reduce((acc, item) => {
+      console.log(item);
+      const price =
+        item.product.discount && item.quantity >= 3
+          ? item.product.price -
+            (item.product.price * item.product.discount) / 100
+          : item.product.price;
+
+      return acc + price * item.quantity;
+    }, 0);
+
+    return { cartId: id, total, count: cart._count.cartItems };
+  }
 }

@@ -10,12 +10,31 @@ export class CartRepository {
       product: {
         select: {
           id: true,
+          price: true,
+          discount: true,
         },
       },
     };
 
     this._cartIncludes = {
-      cartItems: true,
+      cartItems: {
+        select: {
+          id: true,
+          quantity: true,
+          product: {
+            select: {
+              id: true,
+              price: true,
+              discount: true,
+            },
+          },
+        },
+      },
+      _count: {
+        select: {
+          cartItems: true,
+        },
+      },
     };
   }
   create(data: any, productId: number, cartId: number) {

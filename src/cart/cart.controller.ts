@@ -126,4 +126,10 @@ export class CartController {
   async clearCart(@Req() req: any) {
     return this.cartService.clearCart(req.user.Cart.id);
   }
+
+  @Get('total')
+  @ApiOperation({ summary: 'Get Cart Total' })
+  async getCartTotal(@Req() req: any) {
+    return this.cartService.calculateCartTotal(req.user.Cart.id);
+  }
 }
