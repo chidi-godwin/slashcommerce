@@ -91,6 +91,7 @@ export class UserController {
   }
 
   @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update user details' })
   @ApiBody({
     type: UpdateUserDto,
     description: 'Update User',
