@@ -6,20 +6,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CartService } from './cart.service';
-import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+import { CreateCartItemDto } from './dto/create-cart.dto';
+import { UpdateCartItemDto } from './dto/update-cart.dto';
 
 @Controller('cart')
 @ApiTags('Carts')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
+  @ApiOperation({ summary: 'Add a product to the cart' })
+  @Post('item')
+  create(@Req() req: any, @Body() createCartItemDto: CreateCartItemDto) {
+    return this.cartService.create(createCartItemDto, req.user.Cart.id);
   }
 
   @Get()
@@ -33,7 +39,7 @@ export class CartController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
+  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartItemDto) {
     return this.cartService.update(+id, updateCartDto);
   }
 

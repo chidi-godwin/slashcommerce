@@ -14,6 +14,11 @@ export class UserRepository {
       role: true,
       createdAt: true,
       updatedAt: true,
+      Cart: {
+        select: {
+          id: true,
+        },
+      },
     };
   }
 
@@ -40,11 +45,12 @@ export class UserRepository {
     return await this.prismaService.user.create({
       data: {
         ...user,
-        Cart: {},
+        Cart: {
+          create: {},
+        },
       },
       select: {
         ...this._include,
-        Cart: true,
       },
     });
   }
@@ -54,6 +60,11 @@ export class UserRepository {
       where: {
         email,
       },
+      // uses a diffrent select cause password needs to be included for the purpose of authentication
+      select: {
+        ...this._include,
+        password: true,
+      },
     });
   }
 
@@ -61,6 +72,9 @@ export class UserRepository {
     return await this.prismaService.user.findUnique({
       where: {
         id,
+      },
+      select: {
+        ...this._include,
       },
     });
   }
@@ -78,6 +92,9 @@ export class UserRepository {
     return await this.prismaService.user.delete({
       where: {
         id,
+      },
+      select: {
+        ...this._include,
       },
     });
   }
