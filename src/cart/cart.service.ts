@@ -28,7 +28,7 @@ export class CartService {
     return this.cartRepository.removeCartItem(id);
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} cart`;
+  async clearCart(id: number) {
+    return this.cartRepository.removeManyCartItems(id);
   }
 }

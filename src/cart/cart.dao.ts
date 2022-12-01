@@ -61,11 +61,15 @@ export class CartRepository {
     });
   }
 
-  update(id: number, updateCartDto: any) {
-    return `This action updates a #${id} cart`;
-  }
-
   remove(id: number) {
     return `This action removes a #${id} cart`;
+  }
+
+  async removeManyCartItems(cartId: number) {
+    return this.prismaService.cartItem.deleteMany({
+      where: {
+        cartId,
+      },
+    });
   }
 }

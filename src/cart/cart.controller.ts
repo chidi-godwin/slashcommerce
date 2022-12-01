@@ -109,4 +109,21 @@ export class CartController {
   async removeItem(@Param('id') id: number) {
     return this.cartService.removeCartItem(+id);
   }
+
+  @Delete()
+  @ApiOperation({ summary: 'Clear Cart' })
+  @ApiResponse({
+    status: 200,
+    description: 'Cart successfully cleared',
+    content: {
+      'application/json': {
+        example: {
+          count: 2,
+        },
+      },
+    },
+  })
+  async clearCart(@Req() req: any) {
+    return this.cartService.clearCart(req.user.Cart.id);
+  }
 }
