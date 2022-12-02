@@ -9,7 +9,7 @@ export class StoreService {
   create(userId: number, createStoreDto: CreateStoreDto) {
     const owner = { connect: { id: userId } };
     const data = { ...createStoreDto, user: owner };
-    return this.storeRepository.create(data);
+    return this.storeRepository.create(data, userId);
   }
 
   findAll() {

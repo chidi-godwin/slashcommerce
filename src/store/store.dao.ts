@@ -16,11 +16,23 @@ export class StoreRepository {
     };
   }
 
-  async create(data: any) {
-    return await this.prismaService.store.create({
-      data,
-      include: this._include,
-    });
+  async create(data: any, userId: number) {
+    const [user, store] = await this.prismaService.$transaction([
+      this.prismaService.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          role: 'OWNER',
+        },
+      }),
+      this.prismaService.store.create({
+        data,
+        include: this._include,
+      }),
+    ]);
+
+    return { role: user.role, store };
   }
 
   async findAll() {
