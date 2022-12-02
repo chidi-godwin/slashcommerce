@@ -38,7 +38,6 @@ export class AuthService {
       const payload = { email: user.email, sub: user.id };
       const access_token = this.jwtService.sign(payload, { expiresIn: '1h' });
       const link = `${host}/reset-password?token=${access_token}`;
-      console.log(link);
       this.mailService.sendPasswordResetMail(user.email, user.firstname, link);
       return {
         message: 'Password reset link sent to your email',

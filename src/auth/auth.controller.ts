@@ -37,6 +37,19 @@ export class AuthController {
       },
     },
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+    content: {
+      'application/json': {
+        example: {
+          statusCode: 401,
+          message: 'Unauthorized',
+          error: 'Unauthorized',
+        },
+      },
+    },
+  })
   async login(@Request() req, @Body() body: LoginUserDto) {
     return this.authService.login(req.user);
   }
