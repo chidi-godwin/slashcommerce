@@ -19,6 +19,12 @@ export class UserRepository {
           id: true,
         },
       },
+      stores: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     };
   }
 
@@ -85,6 +91,7 @@ export class UserRepository {
         id,
       },
       data,
+      select: this._include,
     });
   }
 

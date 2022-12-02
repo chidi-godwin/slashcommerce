@@ -3,7 +3,7 @@ import { IsStoreAlreadyExist } from '../validators/isStoreAlreadyExists.validato
 
 export class CreateStoreDto {
   @IsString()
-  @MinLength(3)
+  @MinLength(1)
   @IsStoreAlreadyExist({
     message: 'Store already exists. Choose another name.',
   })

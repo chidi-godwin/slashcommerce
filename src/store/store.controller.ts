@@ -28,11 +28,13 @@ import {
 import { Public } from 'src/auth/public.guard';
 import { getAllStoresResponseExample } from './dto/examples/response/get-all-stores-response.example';
 import { UpdateStoreBodyExample } from './dto/examples/body/update-store-body.example';
+import { RoleGuard } from 'src/auth/role.guard';
+import { ROLE } from 'src/auth/role.enum';
 
 @ApiTags('Stores')
 @Controller('store')
-@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class StoreController {
   constructor(private readonly storeService: StoreService) {}
 
@@ -127,6 +129,7 @@ export class StoreController {
       },
     },
   })
+  @UseGuards(JwtAuthGuard, RoleGuard(ROLE.OWNER))
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
     return this.storeService.update(+id, updateStoreDto);
@@ -142,6 +145,7 @@ export class StoreController {
       },
     },
   })
+  @UseGuards(JwtAuthGuard, RoleGuard(ROLE.OWNER))
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.storeService.remove(+id);
