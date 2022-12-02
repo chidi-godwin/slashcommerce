@@ -6,9 +6,9 @@ import { ProductRespository } from './product.dao';
 @Injectable()
 export class ProductService {
   constructor(readonly productRepository: ProductRespository) {}
-  create(createProductDto: CreateProductDto) {
-    const { storeId, ...data } = createProductDto;
-    return this.productRepository.create(data, storeId);
+
+  create(createProductDto: CreateProductDto, storeId: number) {
+    return this.productRepository.create(createProductDto, storeId);
   }
 
   findAll() {

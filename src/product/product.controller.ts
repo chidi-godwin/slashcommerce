@@ -12,6 +12,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -30,11 +31,12 @@ import {
 
 @Controller('product')
 @ApiTags('Products')
-// @UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Post()
+  @Post(':storeId')
   @ApiOperation({ summary: 'Create a product for a store' })
   @ApiBody({
     type: CreateProductDto,
@@ -48,6 +50,11 @@ export class ProductController {
       },
     },
   })
+  @ApiParam({
+    name: 'storeId',
+    description: 'Store ID',
+    type: Number,
+  })
   @ApiResponse({
     status: 201,
     description: 'Product successfully created',
@@ -57,8 +64,11 @@ export class ProductController {
       },
     },
   })
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  create(
+    @Param('storeId') storeId: string,
+    @Body() createProductDto: CreateProductDto,
+  ) {
+    return this.productService.create(createProductDto, +storeId);
   }
 
   @ApiOperation({ summary: 'Get all products' })
