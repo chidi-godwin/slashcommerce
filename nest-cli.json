@@ -11,6 +11,13 @@
           "introspectComments": false
         }
       }
-    ]
+    ],
+    "assets": [
+      {
+        "include": "**/mail/templates/**/*",
+        "outDir": "dist"
+      }
+    ],
+    "watchAssets": true
   }
 }
