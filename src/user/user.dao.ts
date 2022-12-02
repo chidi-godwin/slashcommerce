@@ -95,6 +95,15 @@ export class UserRepository {
     });
   }
 
+  async updatePassword(id: number, password: string) {
+    password = await UserRepository.generateHash(password);
+    return await this.prismaService.user.update({
+      where: { id },
+      data: { password },
+      select: this._include,
+    });
+  }
+
   async delete(id: number) {
     return await this.prismaService.user.delete({
       where: {
