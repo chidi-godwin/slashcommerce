@@ -21,6 +21,16 @@ export class ProductRespository {
     });
   }
 
+  async findProductsByStoreId(storeId: number) {
+    return await this.prismaService.product.findMany({
+      where: {
+        store: {
+          id: storeId,
+        },
+      },
+    });
+  }
+
   async findAll() {
     return this.prismaService.product.findMany();
   }

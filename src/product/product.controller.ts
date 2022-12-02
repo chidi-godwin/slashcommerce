@@ -28,6 +28,9 @@ import {
   CREATE_STORE_RESPONSE,
   GET_ALL_STORES_EXAMPLE,
 } from './dto/examples/create-store-response.example';
+import { StoreGuard } from 'src/auth/store.guard';
+import { ROLE } from 'src/auth/role.enum';
+import { ProductGuard } from 'src/auth/product.guard';
 
 @Controller('product')
 @ApiTags('Products')
@@ -36,7 +39,8 @@ import {
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Post(':storeId')
+  @UseGuards(JwtAuthGuard, StoreGuard(ROLE.OWNER))
+  @Post('store/:storeId')
   @ApiOperation({ summary: 'Create a product for a store' })
   @ApiBody({
     type: CreateProductDto,
@@ -69,6 +73,31 @@ export class ProductController {
     @Body() createProductDto: CreateProductDto,
   ) {
     return this.productService.create(createProductDto, +storeId);
+  }
+
+  // Get all products for a store
+  @Get('store/:storeId')
+  @ApiOperation({ summary: 'Get all products for a store' })
+  @ApiParam({
+    name: 'storeId',
+    description: 'Store ID',
+    type: Number,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The store has been successfully created.',
+    content: {
+      'application/json': {
+        examples: {
+          'Get all products for a store': {
+            value: GET_ALL_STORES_EXAMPLE,
+          },
+        },
+      },
+    },
+  })
+  async getStoreProducts(@Param('storeId') storeId: string) {
+    return this.productService.getStoreProducts(+storeId);
   }
 
   @ApiOperation({ summary: 'Get all products' })
@@ -109,6 +138,7 @@ export class ProductController {
     return this.productService.findOne(+id);
   }
 
+  @UseGuards(JwtAuthGuard, ProductGuard())
   @ApiOperation({ summary: 'Update a product by Id' })
   @ApiParam({
     name: 'id',
@@ -128,6 +158,7 @@ export class ProductController {
     return this.productService.update(+id, updateProductDto);
   }
 
+  @UseGuards(JwtAuthGuard, ProductGuard())
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by Id' })
   @ApiResponse({

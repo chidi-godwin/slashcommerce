@@ -11,6 +11,10 @@ export class ProductService {
     return this.productRepository.create(createProductDto, storeId);
   }
 
+  async getStoreProducts(storeId: number) {
+    return this.productRepository.findProductsByStoreId(storeId);
+  }
+
   findAll() {
     return this.productRepository.findAll();
   }
