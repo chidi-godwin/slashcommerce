@@ -16,7 +16,6 @@ export class ProductRespository {
       },
     };
 
-    console.log(product);
     return await this.prismaService.product.create({
       data: product,
     });

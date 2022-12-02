@@ -37,7 +37,6 @@ export class CartService {
     const cartItems = cart.cartItems;
 
     const total = cartItems.reduce((acc, item) => {
-      console.log(item);
       const price =
         item.product.discount && item.quantity >= 3
           ? item.product.price -

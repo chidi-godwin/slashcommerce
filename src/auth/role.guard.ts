@@ -8,14 +8,6 @@ export const RoleGuard = (role: ROLE): Type<CanActivate> => {
       const user = request.user;
       const storeId = +request.params.id;
 
-      console.log(role);
-      console.log('role', user.role);
-      console.log('storeId', storeId);
-      console.log(typeof storeId);
-      console.log(user.stores);
-      console.log(
-        user.role === role && user.stores.some((store) => store.id === storeId),
-      );
       return (
         user.role === role && user.stores.some((store) => store.id === storeId)
       );
