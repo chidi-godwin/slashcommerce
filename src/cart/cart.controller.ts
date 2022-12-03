@@ -132,4 +132,25 @@ export class CartController {
   async getCartTotal(@Req() req: any) {
     return this.cartService.calculateCartTotal(req.user.Cart.id);
   }
+
+  // get cart item by product id
+  @Get('item/product/:id')
+  @ApiOperation({ summary: 'Get Cart Item by Product Id' })
+  @ApiParam({
+    name: 'id',
+    description: 'Product Id',
+    required: true,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Cart item successfully retrieved',
+    content: {
+      'application/json': {
+        example: ADD_ITEM_TO_CART_RESPONSE_EXAMPLE,
+      },
+    },
+  })
+  async getCartItemByProductId(@Param('id') id: number, @Req() req: any) {
+    return this.cartService.getCartItemByProductId(+id, req.user.Cart.id);
+  }
 }

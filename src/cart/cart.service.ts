@@ -53,4 +53,8 @@ export class CartService {
 
     return { cartId: id, total, count: cart._count.cartItems };
   }
+
+  async getCartItemByProductId(cartId: number, productId: number) {
+    return this.cartRepository.findCartItem(cartId, productId);
+  }
 }
