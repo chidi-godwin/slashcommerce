@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
+  // Create a new user (Shop Owner)
   const shopOwner = await prisma.user.upsert({
     where: { email: 'admin@slashdev.io' },
     update: {},
@@ -25,6 +26,7 @@ async function main() {
     },
   });
 
+  // create a new user (Customer)
   const user = await prisma.user.upsert({
     where: { email: 'testuser@example.com' },
     update: {},
@@ -41,6 +43,24 @@ async function main() {
     },
   });
   console.log({ shopOwner, user });
+
+  // create a new product
+  const product = await prisma.product.create({
+    data: {
+      title: 'Test Product',
+      image: 'https://picsum.photos/200',
+      description: 'Test Product Description',
+      price: 100,
+      discount: 10,
+      store: {
+        connect: {
+          id: 1,
+        },
+      },
+    },
+  });
+
+  console.log({ product });
 }
 
 main()
