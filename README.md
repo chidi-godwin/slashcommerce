@@ -1,73 +1,70 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
+SlashCommerce - simple extensible backend for ecommerce application
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Application
+- Live URL - [SlashCommerce](https://slashcommerce.onrender.com)
+- API Documentation - [SlashCommerce API Documentation](https://slashcommerce.onrender.com/api)
+- Note - slash commerce is hosted on a free spot instance that goes standby after 15 minutes of inactivity. This standby is temporary and the system would be resumed on it's first request after the delay period and a 30s delay to restart.
+
+## Dependencies
+- yarn - [Yarn package manager](https://classic.yarnpkg.com/lang/en/docs/install/)
+- postgres - [Postgres](https://www.postgresql.org/download/)
+- cloudinary account
+- google account setup with an app password for google smtp - [Google App Password Help](https://support.google.com/accounts/answer/185833?hl=en#:~:text=An%20App%20Password%20is%20a,2%2DStep%20Verification%20turned%20on.)
 
 ## Installation
+- ### Instructions
+  - setup a local database
+  - create app passowrd in goolge account
+  - create folder in cloudinary account and get auth details 
+  - create a .env file with .env.example file and put in appropriate values
+  - Install dependencies
+    ```bash
+    $ yarn install
+    ```
 
-```bash
-$ npm install
-```
+  - Migrate database 
+    ```bash
+    $ yarn prisma migrate dev --name 'initial migration'
+    ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+$ yarn start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
 ```
 
 ## Test
 
 ```bash
-# unit tests
-$ npm run test
+# general e2e tests
+$ yarn test:e2e
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# e2e test for particular modules
+$ yarn test:e2e cart
+$ yarn test:e2e product 
 ```
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Included end to end tests
+ - /POST cart/item adds a new product to cart
+ - /POST cart/item adds a new product to cart should add to quantity if product already exists
+ - /GET cart/total should return total price of cart
+ - /GET cart/total should return discounted total if quantity is > 3
+ - /POST product/store/:storeId adds a new product
+ - /POST product/store/:storeId returns 403 if user is not store owner
+ - /GET product fetches all added products
+ - /GET product/:id fetches a single product
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Chidiebere Nwachukwu](https://www.linkedin.com/in/chidi-godwin/)
+- Website - [https://www.linkedin.com/in/chidi-godwin/](https://www.linkedin.com/in/chidi-godwin/)
+- Twitter - [@chidi_godwn](https://twitter.com/chidi_godwn)
 
-## License
-
-Nest is [MIT licensed](LICENSE).
