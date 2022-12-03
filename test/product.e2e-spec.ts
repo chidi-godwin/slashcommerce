@@ -3,15 +3,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { ProductModule } from '../src/product/product.module';
 import { PrismaModule } from '../src/prisma/prisma.module';
-import { ProductService } from '../src/product/product.service';
 import { AuthModule } from '../src/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from '../src/config/configuration';
 
 describe('Product', () => {
   let app: INestApplication;
-  let service: ProductService;
   let product: any;
+  let usertoken: string;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -29,7 +28,6 @@ describe('Product', () => {
     }).compile();
 
     app = module.createNestApplication();
-    service = module.get<ProductService>(ProductService);
     product = {
       id: expect.any(Number),
       title: expect.any(String),
@@ -41,6 +39,9 @@ describe('Product', () => {
       createdAt: expect.any(String),
       updatedAt: expect.any(String),
     };
+
+    usertoken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTY3MDA2NzIxOCwiZXhwIjoxNzAxNjAzMjE4fQ._vefGdeqECyd0wOgPaSUQW6EL8NxhexWM0Rf1zytrII';
     await app.init();
   });
 
@@ -50,11 +51,6 @@ describe('Product', () => {
 
   it('should be defined', () => {
     expect(app).toBeDefined();
-  });
-
-  it('should return an array of products', async () => {
-    const result = await service.findAll();
-    expect(result).toBeInstanceOf(Array);
   });
 
   describe('Add Product', () => {
@@ -67,10 +63,7 @@ describe('Product', () => {
         discount: 10,
       };
 
-      const storeId = 13;
-
-      const usertoken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJpYXQiOjE2NzAwNjE5ODEsImV4cCI6MTcwMTU5Nzk4MX0.3nDcPHMUhDObryxGHuFuMItFEQMI-y9o81lcB11pqRQ';
+      const storeId = 1;
 
       return request(app.getHttpServer())
         .post(`/product/store/${storeId}`)
@@ -93,9 +86,6 @@ describe('Product', () => {
 
       const storeId = 10;
 
-      const usertoken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJpYXQiOjE2NzAwNjE5ODEsImV4cCI6MTcwMTU5Nzk4MX0.3nDcPHMUhDObryxGHuFuMItFEQMI-y9o81lcB11pqRQ';
-
       return request(app.getHttpServer())
         .post(`/product/store/${storeId}`)
         .send(newProduct)
@@ -106,8 +96,6 @@ describe('Product', () => {
 
   describe('Fetch Product', () => {
     it('/GET product fetches all added products', () => {
-      const usertoken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJpYXQiOjE2NzAwNjE5ODEsImV4cCI6MTcwMTU5Nzk4MX0.3nDcPHMUhDObryxGHuFuMItFEQMI-y9o81lcB11pqRQ';
       return request(app.getHttpServer())
         .get('/product')
         .set('accept', 'application/json')
@@ -122,9 +110,6 @@ describe('Product', () => {
 
     it('/GET product/:id fetches a single product', () => {
       const productId = 1;
-
-      const usertoken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI4LCJpYXQiOjE2NzAwNjE5ODEsImV4cCI6MTcwMTU5Nzk4MX0.3nDcPHMUhDObryxGHuFuMItFEQMI-y9o81lcB11pqRQ';
 
       return request(app.getHttpServer())
         .get(`/product/${productId}`)
