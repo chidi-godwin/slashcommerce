@@ -4,7 +4,7 @@ SlashCommerce - simple extensible backend for ecommerce application
 ## Application
 - Live URL - [SlashCommerce](https://slashcommerce.onrender.com)
 - API Documentation - [SlashCommerce API Documentation](https://slashcommerce.onrender.com/api)
-- Note - slash commerce is hosted on a free spot instance that goes standby after 15 minutes of inactivity. This standby is temporary and the system would be resumed on it's first request after the delay period and a 30s delay to restart.
+- Note - slash commerce is hosted on a free spot instance that goes standby after 15 minutes of inactivity. This standby is temporary and the system would be resumed on receiving it's first request and a 30s delay to restart.
 
 ## Dependencies
 - yarn - [Yarn package manager](https://classic.yarnpkg.com/lang/en/docs/install/)
