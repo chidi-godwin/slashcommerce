@@ -9,7 +9,7 @@ SlashCommerce - simple extensible backend for ecommerce application
 ## Dependencies
 - yarn - [Yarn package manager](https://classic.yarnpkg.com/lang/en/docs/install/)
 - postgres - [Postgres](https://www.postgresql.org/download/)
-- cloudinary account
+- cloudinary account - [Cloudinary](https://cloudinary.com/documentation/cloudinary_get_started)
 - google account setup with an app password for google smtp - [Google App Password Help](https://support.google.com/accounts/answer/185833?hl=en#:~:text=An%20App%20Password%20is%20a,2%2DStep%20Verification%20turned%20on.)
 
 ## Installation
