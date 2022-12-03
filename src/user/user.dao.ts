@@ -33,6 +33,9 @@ export class UserRepository {
       data: {
         ...user,
         role: 'OWNER',
+        Cart: {
+          create: {},
+        },
         stores: {
           create: [store],
         },
