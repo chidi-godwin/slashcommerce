@@ -9,6 +9,11 @@ export class CartService {
 
   async addItemToCart(createCartItemDto: CreateCartItemDto, cartId: number) {
     const { productId, ...data } = createCartItemDto;
+    const cartItem = await this.cartRepository.findCartItem(cartId, productId);
+    if (cartItem) {
+      const quantity = cartItem.quantity + data.quantity;
+      return this.cartRepository.updateCartItem(cartItem.id, { quantity });
+    }
     return this.cartRepository.create(data, productId, cartId);
   }
 

@@ -48,6 +48,16 @@ export class CartRepository {
     });
   }
 
+  async findCartItem(cartId: number, productId: number) {
+    return this.prismaService.cartItem.findFirst({
+      where: {
+        cartId,
+        productId,
+      },
+      include: this._cartItemIncludes,
+    });
+  }
+
   findAll() {
     return this.prismaService.cart.findMany();
   }
