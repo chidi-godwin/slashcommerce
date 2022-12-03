@@ -19,7 +19,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import {
   CREATE_STORE_EXAMPLE,
   CREATE_STORE_WITH_DISCOUNT_EXAMPLE,
@@ -28,9 +28,9 @@ import {
   CREATE_STORE_RESPONSE,
   GET_ALL_STORES_EXAMPLE,
 } from './dto/examples/create-store-response.example';
-import { StoreGuard } from 'src/auth/store.guard';
-import { ROLE } from 'src/auth/role.enum';
-import { ProductGuard } from 'src/auth/product.guard';
+import { StoreGuard } from '../auth/store.guard';
+import { ROLE } from '../auth/role.enum';
+import { ProductGuard } from '../auth/product.guard';
 
 @Controller('product')
 @ApiTags('Products')

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../prisma/prisma.module';
 import { UserRepository } from './user.dao';
 import { IsUserAlreadyExistConstraint } from './validations/IsUserAlreadyExist.validator';
 

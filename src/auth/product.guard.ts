@@ -5,7 +5,7 @@ import {
   mixin,
   Type,
 } from '@nestjs/common';
-import { ProductRespository } from 'src/product/product.dao';
+import { ProductRespository } from '../product/product.dao';
 
 export const ProductGuard = (): Type<CanActivate> => {
   @Injectable()

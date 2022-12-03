@@ -23,8 +23,8 @@ import {
   user,
   userWithStoreOwner,
 } from './dto/examples/response/create-user-response.example';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Public } from 'src/auth/public.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Public } from '../auth/public.guard';
 import {
   createStoreOwnerExample,
   createUserExample,

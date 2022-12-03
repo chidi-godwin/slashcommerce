@@ -19,17 +19,17 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { createStoreBodyExample } from './dto/examples/body/create-store-body.example';
 import {
   createStoreErrorResponseExample,
   createStoreSuccessResponseExample,
 } from './dto/examples/response/create-store-response.example';
-import { Public } from 'src/auth/public.guard';
+import { Public } from '../auth/public.guard';
 import { getAllStoresResponseExample } from './dto/examples/response/get-all-stores-response.example';
 import { UpdateStoreBodyExample } from './dto/examples/body/update-store-body.example';
-import { StoreGuard } from 'src/auth/store.guard';
-import { ROLE } from 'src/auth/role.enum';
+import { StoreGuard } from '../auth/store.guard';
+import { ROLE } from '../auth/role.enum';
 
 @ApiTags('Stores')
 @Controller('store')

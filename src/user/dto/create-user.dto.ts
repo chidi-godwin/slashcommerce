@@ -10,9 +10,9 @@ import {
   Validate,
   ValidateNested,
 } from 'class-validator';
-import { ValueRequiresOtherFieldValidation } from 'src/common/validators/valueRequiresOtherField.validator';
+import { ValueRequiresOtherFieldValidation } from '../../common/validators/valueRequiresOtherField.validator';
 
-import { CreateStoreDto } from 'src/store/dto/create-store.dto';
+import { CreateStoreDto } from '../../store/dto/create-store.dto';
 import { IsUserAlreadyExist } from '../validations/IsUserAlreadyExist.validator';
 
 @Injectable()
