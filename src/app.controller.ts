@@ -15,6 +15,7 @@ export class AppController {
   @ApiOperation({ summary: 'Demo Webhook for Reliable Storage' })
   @Post('webhook')
   webhook(@Body() body: any): string {
+    console.log('webhook', body);
     return body;
   }
 }
