@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -10,5 +10,11 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @ApiOperation({ summary: 'Demo Webhook for Reliable Storage' })
+  @Post('webhook')
+  webhook(@Body() body: any): string {
+    return body;
   }
 }
